@@ -2,7 +2,7 @@ name: Automate Release
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   merge-main-into-deploy:
