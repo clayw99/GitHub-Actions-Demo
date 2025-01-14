@@ -1,0 +1,28 @@
+name: Automate Release
+
+permissions:
+  contents: write
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  merge-main-into-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action [bot]"
+
+      - name: Merge main into deploy
+        run: |
+          git checkout deploy
+          git merge origin/main --no-ff -m "Merge main into deploy following release ${{ github.event.release.tag_name }}"
+          git push origin deploy --follow-tags
