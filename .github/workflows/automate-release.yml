@@ -14,8 +14,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions@github.com"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action [bot]"
 
       - name: Merge main into deploy
         run: |
